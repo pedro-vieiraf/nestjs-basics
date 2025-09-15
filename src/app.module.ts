@@ -3,6 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BooksModule } from './books/books.module';
+import { Book } from './books/entities/book.entity';
+import { APP_PIPE } from '@nestjs/core';
+import { CatchEverythingFilter } from './common/filters/catch-everything.filter';
+import { GlobalValidationPipe } from './common/pipes/global-validation.pipe';
 
 @Module({
   imports: [
@@ -13,12 +17,23 @@ import { BooksModule } from './books/books.module';
       username: process.env.DB_USER || 'postgres',
       password: process.env.DB_PASS || 'postgres',
       database: process.env.DB_NAME || 'myapp',
+      entities: [Book],
       autoLoadEntities: true,
       synchronize: true,
     }),
     BooksModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: GlobalValidationPipe,
+    },
+    {
+      provide: 'APP_FILTER',
+      useClass: CatchEverythingFilter,
+    },
+  ],
 })
 export class AppModule {}

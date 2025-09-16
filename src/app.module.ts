@@ -7,6 +7,8 @@ import { Book } from './books/entities/book.entity';
 import { APP_PIPE } from '@nestjs/core';
 import { CatchEverythingFilter } from './common/filters/catch-everything.filter';
 import { GlobalValidationPipe } from './common/pipes/global-validation.pipe';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { GlobalValidationPipe } from './common/pipes/global-validation.pipe';
       synchronize: true,
     }),
     BooksModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [

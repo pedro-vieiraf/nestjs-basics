@@ -16,7 +16,7 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
-  async findOne(username: string): Promise<User | undefined> {
+  async findOne(username: string): Promise<User> {
     const user = await this.usersRepository.findOneBy({ username });
     if (!user) {
       throw new NotFoundException(`User with username ${username} not found`);

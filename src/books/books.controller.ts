@@ -11,12 +11,14 @@ import {
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('books')
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
+  @ApiBearerAuth('JWT')
   create(@Body() createBookDto: CreateBookDto) {
     return this.booksService.create(createBookDto);
   }

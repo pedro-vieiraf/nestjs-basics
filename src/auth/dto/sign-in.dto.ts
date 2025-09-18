@@ -11,3 +11,7 @@ export class SignInDto {
   @IsString()
   password: string;
 }
+
+export class SignInResponseDto {
+  access_token: string;
+}
